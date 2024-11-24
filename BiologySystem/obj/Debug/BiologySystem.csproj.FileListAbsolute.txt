@@ -1,0 +1,10 @@
+D:\Veronika\BiologySystem\BiologySystem\bin\Debug\BiologySystem.exe.config
+D:\Veronika\BiologySystem\BiologySystem\bin\Debug\BiologySystem.exe
+D:\Veronika\BiologySystem\BiologySystem\bin\Debug\BiologySystem.pdb
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.csproj.AssemblyReference.cache
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.MainForm.resources
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.Properties.Resources.resources
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.csproj.GenerateResource.cache
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.csproj.CoreCompileInputs.cache
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.exe
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.pdb
