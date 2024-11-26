@@ -13,7 +13,7 @@ namespace BiologySystem
         public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int hunterEfficiency)
             : base(x, y, speed, color, hungerLevel, energy)
         {
-            HuntEfficiency = hungerLevel;
+            HuntEfficiency = hunterEfficiency;
         }
 
         public void Hunt(Herbivore herbivore)
@@ -22,11 +22,20 @@ namespace BiologySystem
             {
                 Energy += herbivore.Energy;
                 HungerLevel -= herbivore.Energy;
+                herbivore.Dead();
             }
+
             else
             {
-                X += (herbivore.X - X) / HuntEfficiency;
-                Y += (herbivore.Y - Y) / HuntEfficiency;
+                int deltaX = herbivore.X - X;
+                int deltaY = herbivore.Y - Y;
+
+                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+                if(distance > 0)
+                {
+                    X += (int)(deltaX / distance * Speed);
+                    Y += (int)(deltaY / distance * Speed);
+                }
             }
         }
     }

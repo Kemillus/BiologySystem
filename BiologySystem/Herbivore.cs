@@ -25,6 +25,7 @@ namespace BiologySystem
             {
                 Energy += food.NutritionValue;
                 HungerLevel -= food.NutritionValue;
+                food.Dead();
             }
         }
 
