@@ -23,41 +23,30 @@ namespace BiologySystem
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += TimerTick;
-            foodSpawnTimer = new Timer();
-            foodSpawnTimer.Interval = 5000;
-            foodSpawnTimer.Tick += TimerSpawnFood;
             timer.Start();
+
+            foodSpawnTimer = new Timer();
+            foodSpawnTimer.Interval = 5000; 
+            foodSpawnTimer.Tick += FoodSpawnTimerTick;
             foodSpawnTimer.Start();
         }
 
-        private void TimerSpawnFood(object sender, EventArgs e)
+        private void FoodSpawnTimerTick(object sender, EventArgs e)
         {
             var rand = new Random();
-            var food = new Food(rand.Next(ClientSize.Width), rand.Next(ClientSize.Height), 0, Color.Green, 5);
-            organisms.Add(food);
+            int x = rand.Next(ClientSize.Width);
+            int y = rand.Next(ClientSize.Height);
+            organisms.Add(new Food(x, y, 0, Color.Green, 10));
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            foreach (var organism in organisms)
+            foreach (var organism in organisms.FindAll(o => !o.IsDead))
             {
-                organism.Move(ClientSize.Width, ClientSize.Height);
+                organism.Move(ClientSize.Width, ClientSize.Height, organisms);
             }
 
-            for (int i = 0; i < organisms.Count; i++)
-            {
-                for (int j = i + 1; j < organisms.Count; j++)
-                {
-                    if (organisms[i] is Herbivore herbivore && organisms[j] is Food food)
-                    {
-                        herbivore.Eat(food);
-                    }
-                    else if (organisms[i] is Predator predator && organisms[j] is Herbivore prey)
-                    {
-                        predator.Hunt(prey);
-                    }
-                }
-            }
+            //organisms.RemoveAll(o => o.IsDead);
 
             Invalidate();
         }
@@ -73,9 +62,35 @@ namespace BiologySystem
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            organisms.Add(new Food(100, 100, 0, Color.Green, 10));
-            organisms.Add(new Herbivore(200, 200, 5, Color.Blue, 50, 100));
-            organisms.Add(new Predator(220, 220, 12, Color.Red, 30, 100, 2));
+            
+        }
+
+        private void CreateOrganism(object sender, EventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            Random rand = new Random();
+
+            int posX = rand.Next(ClientSize.Width);
+            int posY = rand.Next(ClientSize.Height);
+
+            if (clickedButton != null)
+            {
+                switch (clickedButton.Name)
+                {
+                    case "buttonPredator":
+                        organisms.Add(new Predator(posX, posY, 9, Color.Red, 30, 100, 100));
+                        break;
+                    case "buttonHerbivore":
+                        organisms.Add(new Herbivore(posX, posY, 5, Color.Blue, 50, 100, 100));
+                        break;
+                    case "buttonFood":
+                        organisms.Add(new Food(posX, posY, 20, Color.Green, 10));
+                        break;
+                    default:
+                        
+                        break;
+                }
+            }
         }
     }
 }

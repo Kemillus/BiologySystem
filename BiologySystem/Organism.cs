@@ -13,8 +13,9 @@ namespace BiologySystem
         public int Y { get; set; }
         public int Speed { get; set; }
         public Color Color { get; set; }
-        private int alpha = 255;
-        private Random rand = new Random();
+        public bool IsDead { get; set; }
+        protected int alpha = 255;
+
         public Organism(int x, int y, int speed, Color color)
         {
             X = x;
@@ -23,15 +24,27 @@ namespace BiologySystem
             Color = color;
         }
 
-        public virtual void Move(int formWidth, int formHeight)
+        public virtual void Dead()
         {
-            //var rand = new Random();
-            if (-Speed > Speed)
-            {
-                return;
-            }
-            Y += rand.Next(-Speed, Speed);
-            X += rand.Next(-Speed, Speed);
+            IsDead = true;
+        }
+
+        public double DistanceTo(Organism other)
+        {
+            return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2));
+        }
+
+        public virtual void Move(int formWidth, int formHeight, List<Organism> organisms)
+        {
+
+        }
+
+        protected void MoveRandom(int formWidth, int formHeight)
+        {
+            var rand = new Random();
+            int absSpeed = Math.Abs(Speed);
+            Y += rand.Next(-absSpeed, absSpeed);
+            X += rand.Next(-absSpeed, absSpeed);
             if (X < 0)
             {
                 X = 0;
@@ -56,16 +69,17 @@ namespace BiologySystem
 
         public virtual void Draw(Graphics g)
         {
-            var brush = new SolidBrush(Color);
-            g.FillEllipse(brush, X, Y, 10, 10);
-        }
-
-        public virtual void Dead()
-        {
-            if (alpha > 0)
+            if (IsDead)
             {
                 alpha -= 5;
                 if (alpha < 0) alpha = 0;
+            }
+
+            if (alpha > 0)
+            {
+                var color = Color.FromArgb(alpha, Color);
+                var brush = new SolidBrush(color);
+                g.FillEllipse(brush, X, Y, 10, 10);
             }
         }
     }

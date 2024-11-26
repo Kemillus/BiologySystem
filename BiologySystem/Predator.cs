@@ -9,11 +9,60 @@ namespace BiologySystem
 {
     internal class Predator : Herbivore
     {
-        public int HuntEfficiency { get; set; }
-        public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int hunterEfficiency)
-            : base(x, y, speed, color, hungerLevel, energy)
+        public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
+            : base(x, y, speed, color, hungerLevel, energy, visionRadius)
         {
-            HuntEfficiency = hunterEfficiency;
+
+        }
+
+        public Herbivore FindNearestPrey(List<Organism> organisms)
+        {
+            Herbivore nearestPrey = null;
+            double minDistance = double.MaxValue;
+
+            foreach (var organism in organisms)
+            {
+                if (organism is Herbivore prey)
+                {
+                    double distance = DistanceTo(prey);
+                    if (distance < minDistance && distance <= VisionRadius)
+                    {
+                        minDistance = distance;
+                        nearestPrey = prey;
+                    }
+                }
+            }
+
+            return nearestPrey;
+        }
+
+        public override void Move(int formWidth, int formHeight, List<Organism> organisms)
+        {
+            Herbivore targetPrey = FindNearestPrey(organisms.FindAll(o => !o.IsDead));
+            if (targetPrey != null)
+            {
+                MoveTowardsTarget(targetPrey);
+                if (DistanceTo(targetPrey) < 5)
+                {
+                    Hunt(targetPrey);
+                }
+            }
+            else
+            {
+                Food targetFood = FindNearestFood(organisms.FindAll(o => !o.IsDead));
+                if (targetFood != null)
+                {
+                    MoveTowardsTarget(targetFood);
+                    if (DistanceTo(targetFood) < 5)
+                    {
+                        Eat(targetFood);
+                    }
+                }
+                else
+                {
+                    MoveRandom(formWidth, formHeight);
+                }
+            }
         }
 
         public void Hunt(Herbivore herbivore)
@@ -22,21 +71,9 @@ namespace BiologySystem
             {
                 Energy += herbivore.Energy;
                 HungerLevel -= herbivore.Energy;
-                herbivore.Dead();
-            }
-
-            else
-            {
-                int deltaX = herbivore.X - X;
-                int deltaY = herbivore.Y - Y;
-
-                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-                if(distance > 0)
-                {
-                    X += (int)(deltaX / distance * Speed);
-                    Y += (int)(deltaY / distance * Speed);
-                }
+                //herbivore.Dead();
             }
         }
     }
+
 }
