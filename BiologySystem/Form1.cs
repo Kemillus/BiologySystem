@@ -46,7 +46,7 @@ namespace BiologySystem
                 organism.Move(ClientSize.Width, ClientSize.Height, organisms);
             }
 
-            //organisms.RemoveAll(o => o.IsDead);
+            organisms.RemoveAll(o => o.IsDead);
 
             Invalidate();
         }

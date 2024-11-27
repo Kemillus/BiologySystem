@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace BiologySystem
 {
-    internal class Predator : Herbivore
+    internal class Predator : Organism
     {
+        public int HungerLevel { get; set; }
+        public int Energy { get; set; }
+        public int VisionRadius { get; set; }
         public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
-            : base(x, y, speed, color, hungerLevel, energy, visionRadius)
+            : base(x, y, speed, color)
         {
 
         }
@@ -49,19 +52,23 @@ namespace BiologySystem
             }
             else
             {
-                Food targetFood = FindNearestFood(organisms.FindAll(o => !o.IsDead));
-                if (targetFood != null)
-                {
-                    MoveTowardsTarget(targetFood);
-                    if (DistanceTo(targetFood) < 5)
-                    {
-                        Eat(targetFood);
-                    }
-                }
-                else
-                {
-                    MoveRandom(formWidth, formHeight);
-                }
+                MoveRandom(formWidth, formHeight);
+            }
+        }
+
+        private void MoveTowardsTarget(Organism target)
+        {
+            if (target == null) return;
+
+            double distance = DistanceTo(target);
+
+            if (distance > 0)
+            {
+                int deltaX = target.X - X;
+                int deltaY = target.Y - Y;
+
+                X += (int)(deltaX / distance * Speed);
+                Y += (int)(deltaY / distance * Speed);
             }
         }
 
@@ -71,7 +78,7 @@ namespace BiologySystem
             {
                 Energy += herbivore.Energy;
                 HungerLevel -= herbivore.Energy;
-                //herbivore.Dead();
+                herbivore.Dead();
             }
         }
     }
