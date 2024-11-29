@@ -26,7 +26,7 @@ namespace BiologySystem
             timer.Start();
 
             foodSpawnTimer = new Timer();
-            foodSpawnTimer.Interval = 5000; 
+            foodSpawnTimer.Interval = 5000;
             foodSpawnTimer.Tick += FoodSpawnTimerTick;
             foodSpawnTimer.Start();
         }
@@ -46,7 +46,7 @@ namespace BiologySystem
                 organism.Move(ClientSize.Width, ClientSize.Height, organisms);
             }
 
-            organisms.RemoveAll(o => o.IsDead);
+            //organisms.RemoveAll(o => o.IsDead);
 
             Invalidate();
         }

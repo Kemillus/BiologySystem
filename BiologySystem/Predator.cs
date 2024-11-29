@@ -12,10 +12,13 @@ namespace BiologySystem
         public int HungerLevel { get; set; }
         public int Energy { get; set; }
         public int VisionRadius { get; set; }
+
         public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
             : base(x, y, speed, color)
         {
-
+            HungerLevel = hungerLevel;
+            Energy = energy;
+            VisionRadius = visionRadius;
         }
 
         public Herbivore FindNearestPrey(List<Organism> organisms)
@@ -25,10 +28,10 @@ namespace BiologySystem
 
             foreach (var organism in organisms)
             {
-                if (organism is Herbivore prey)
+                if (organism is Herbivore prey && !prey.IsDead) // Check if prey is alive!
                 {
                     double distance = DistanceTo(prey);
-                    if (distance < minDistance && distance <= VisionRadius)
+                    if (distance <= VisionRadius && distance < minDistance)  // Correct the order of the checks
                     {
                         minDistance = distance;
                         nearestPrey = prey;
@@ -41,14 +44,12 @@ namespace BiologySystem
 
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
-            Herbivore targetPrey = FindNearestPrey(organisms.FindAll(o => !o.IsDead));
+            Herbivore targetPrey = FindNearestPrey(organisms); // Removed redundant FindAll
+
             if (targetPrey != null)
             {
                 MoveTowardsTarget(targetPrey);
-                if (DistanceTo(targetPrey) < 5)
-                {
-                    Hunt(targetPrey);
-                }
+                Hunt(targetPrey);
             }
             else
             {
@@ -82,5 +83,4 @@ namespace BiologySystem
             }
         }
     }
-
 }
