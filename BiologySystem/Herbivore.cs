@@ -12,6 +12,7 @@ namespace BiologySystem
         public int HungerLevel { get; set; }
         public int Energy { get; set; }
         public int VisionRadius { get; set; }
+        private Food targetFood = null;
 
         public Herbivore(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
             : base(x, y, speed, color)
@@ -46,8 +47,6 @@ namespace BiologySystem
         {
             if (target == null) return;
 
-
-
             double distance = DistanceTo(target);
             if (distance > 0)
             {
@@ -61,9 +60,27 @@ namespace BiologySystem
 
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
-            Food targetFood = FindNearestFood(organisms.FindAll(o => !o.IsDead));
+            HungerLevel += HungerIncrease;
 
-            if (targetFood != null)
+            if (HungerLevel >= 500)
+            {
+                Dead();
+                return;
+            }
+
+            if (HungerLevel > 400)
+            {
+                Speed = 10;
+            }
+            else { Speed = 7; }
+
+            targetFood = null;
+            if (targetFood == null)
+            {
+                targetFood = FindNearestFood(organisms);
+            }
+
+            if (targetFood != null && !targetFood.IsDead)
             {
                 MoveTowardsTarget(targetFood);
                 if (DistanceTo(targetFood) < 5)
@@ -71,10 +88,16 @@ namespace BiologySystem
                     Eat(targetFood);
                 }
             }
+
             else
             {
                 MoveRandom(formWidth, formHeight);
             }
+
+            if (X < 0) { angle = Math.PI - angle; X = 0; }
+            if (X > formWidth) { angle = Math.PI - angle; X = formWidth; }
+            if (Y < 0) { angle = -angle; Y = 0; }
+            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         public void Eat(Food food)
@@ -82,7 +105,7 @@ namespace BiologySystem
             if (Math.Abs(X - food.X) < 5 && Math.Abs(Y - food.Y) < 5)
             {
                 Energy += food.NutritionValue;
-                HungerLevel -= food.NutritionValue;
+                HungerLevel = Math.Max(0, HungerLevel - food.NutritionValue);
                 food.Dead();
             }
         }

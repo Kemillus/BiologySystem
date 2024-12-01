@@ -12,6 +12,7 @@ namespace BiologySystem
         public int HungerLevel { get; set; }
         public int Energy { get; set; }
         public int VisionRadius { get; set; }
+        private Herbivore targetPrey = null;
 
         public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
             : base(x, y, speed, color)
@@ -44,17 +45,43 @@ namespace BiologySystem
 
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
-            Herbivore targetPrey = FindNearestPrey(organisms);
+            HungerLevel += HungerIncrease;
 
-            if (targetPrey != null)
+            if (HungerLevel >= 500)
+            {
+                Dead();
+                return;
+            }
+
+            if (HungerLevel > 400)
+            {
+                Speed = 10;
+            }
+            else { Speed = 7; }
+
+            targetPrey = null;
+            if (targetPrey == null || targetPrey.IsDead)
+            {
+                targetPrey = FindNearestPrey(organisms);
+            }
+
+            if (targetPrey != null && !targetPrey.IsDead)
             {
                 MoveTowardsTarget(targetPrey);
-                Hunt(targetPrey);
+                if (DistanceTo(targetPrey) < 5)
+                {
+                    Hunt(targetPrey);
+                }
             }
             else
             {
                 MoveRandom(formWidth, formHeight);
             }
+
+            if (X < 0) { angle = Math.PI - angle; X = 0; }
+            if (X > formWidth) { angle = Math.PI - angle; X = formWidth; }
+            if (Y < 0) { angle = -angle; Y = 0; }
+            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         private void MoveTowardsTarget(Organism target)
@@ -80,6 +107,28 @@ namespace BiologySystem
                 Energy += herbivore.Energy;
                 HungerLevel -= herbivore.Energy;
                 herbivore.Dead();
+            }
+        }
+
+        public override void Reproduce(List<Organism> organisms, int formWidth, int formHeight)
+        {
+            int reproductionCost = 50;
+
+            if (Energy > reproductionCost)
+            {
+                Energy -= reproductionCost;
+
+                Random rand = new Random();
+                int xOffxet = rand.Next(-10, 11);
+                int yOffset = rand.Next(-10, 11);
+                int newX = X + xOffxet;
+                int newY = Y + yOffset;
+
+                if (newX < 0) newX = 0;
+                if (newX > formWidth) newX = formWidth;
+                if (newY < 0) newY = 0;
+                if(newY > formHeight) newY = formHeight;
+                organisms.Add(new Predator(newX, newY, Speed, Color, 0, Energy / 2, VisionRadius));
             }
         }
     }

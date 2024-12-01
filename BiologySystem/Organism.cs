@@ -14,9 +14,11 @@ namespace BiologySystem
         public int Speed { get; set; }
         public Color Color { get; set; }
         public bool IsDead { get; set; }
+        public int HungerIncrease { get; set; }
         protected int alpha = 255;
-        private double angle = 0;
-        private Random rand = new Random();
+        protected double angle = 0;
+        protected Random rand = new Random(Guid.NewGuid().GetHashCode());
+
 
         public Organism(int x, int y, int speed, Color color)
         {
@@ -25,6 +27,7 @@ namespace BiologySystem
             Speed = speed;
             Color = color;
             rand = new Random(Guid.NewGuid().GetHashCode());
+            HungerIncrease = 1;
         }
 
         public virtual void Dead()
@@ -44,8 +47,7 @@ namespace BiologySystem
 
         protected void MoveRandom(int formWidth, int formHeight)
         {
-            var rand = new Random();
-
+            
             if (rand.NextDouble() < 0.05)
             {
                 angle = rand.NextDouble() * 2 * Math.PI;
@@ -54,9 +56,8 @@ namespace BiologySystem
                 Speed += speedVariation;
 
 
-                if (Speed < 2) Speed = 2;
+                if (Speed < 1) Speed = 1;
                 if (Speed > 10) Speed = 10;
-
             }
 
             double dx = Math.Cos(angle) * Speed;
@@ -65,21 +66,21 @@ namespace BiologySystem
             X += (int)dx;
             Y += (int)dy;
 
-            if (X < 0)
-            {
-                angle = Math.PI - angle;
-                X = 0;
-            }
+            //if (X < 0)
+            //{
+            //    angle = Math.PI - angle;
+            //    X = 0;
+            //}
 
-            if (X > formWidth)
-            {
-                angle = Math.PI - angle;
-                X = formWidth;
-            }
+            //if (X > formWidth)
+            //{
+            //    angle = Math.PI - angle;
+            //    X = formWidth;
+            //}
 
-            if (Y < 0) { angle = -angle; Y = 0; }
+            //if (Y < 0) { angle = -angle; Y = 0; }
 
-            if (Y > formHeight) { angle = -angle; Y = formHeight; }
+            //if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         public virtual void Draw(Graphics g)
@@ -97,5 +98,7 @@ namespace BiologySystem
                 g.FillEllipse(brush, X, Y, 10, 10);
             }
         }
+
+        public virtual void Reproduce(List<Organism> organisms, int formWidth, int formHeight) { }
     }
 }

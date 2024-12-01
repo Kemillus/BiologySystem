@@ -48,7 +48,6 @@ namespace BiologySystem
             }
 
             //organisms.RemoveAll(o => o.IsDead);
-
             Invalidate();
         }
 
@@ -79,7 +78,7 @@ namespace BiologySystem
                 switch (clickedButton.Name)
                 {
                     case "buttonPredator":
-                        organisms.Add(new Predator(posX, posY, 9, Color.Red, 30, 100, 100));
+                        organisms.Add(new Predator(posX, posY, 9, Color.Red, 50, 100, 100));
                         break;
                     case "buttonHerbivore":
                         organisms.Add(new Herbivore(posX, posY, 5, Color.Blue, 50, 100, 100));
