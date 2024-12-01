@@ -32,6 +32,7 @@
             this.buttonPredator = new System.Windows.Forms.Button();
             this.buttonHerbivore = new System.Windows.Forms.Button();
             this.buttonFood = new System.Windows.Forms.Button();
+            this.buttonPaused = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonGeneral
@@ -42,7 +43,7 @@
             this.buttonGeneral.TabIndex = 0;
             this.buttonGeneral.Text = "General";
             this.buttonGeneral.UseVisualStyleBackColor = true;
-            this.buttonGeneral.Click += new System.EventHandler(this.MainFormLoad);
+            
             // 
             // buttonPredator
             // 
@@ -66,7 +67,7 @@
             // 
             // buttonFood
             // 
-            this.buttonFood.Location = new System.Drawing.Point(713, 126);
+            this.buttonFood.Location = new System.Drawing.Point(713, 129);
             this.buttonFood.Name = "buttonFood";
             this.buttonFood.Size = new System.Drawing.Size(75, 23);
             this.buttonFood.TabIndex = 0;
@@ -74,11 +75,22 @@
             this.buttonFood.UseVisualStyleBackColor = true;
             this.buttonFood.Click += new System.EventHandler(this.CreateOrganism);
             // 
+            // buttonPaused
+            // 
+            this.buttonPaused.Location = new System.Drawing.Point(713, 168);
+            this.buttonPaused.Name = "buttonPaused";
+            this.buttonPaused.Size = new System.Drawing.Size(75, 23);
+            this.buttonPaused.TabIndex = 0;
+            this.buttonPaused.Text = "Pause";
+            this.buttonPaused.UseVisualStyleBackColor = true;
+            this.buttonPaused.Click += new System.EventHandler(this.Paused);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonPaused);
             this.Controls.Add(this.buttonFood);
             this.Controls.Add(this.buttonHerbivore);
             this.Controls.Add(this.buttonPredator);
@@ -95,6 +107,7 @@
         private System.Windows.Forms.Button buttonPredator;
         private System.Windows.Forms.Button buttonHerbivore;
         private System.Windows.Forms.Button buttonFood;
+        private System.Windows.Forms.Button buttonPaused;
     }
 }
 

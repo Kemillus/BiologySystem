@@ -16,6 +16,8 @@ namespace BiologySystem
         private Timer timer;
         private Timer foodSpawnTimer;
         private Random rand;
+        private bool isPaused = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -45,6 +47,7 @@ namespace BiologySystem
             foreach (var organism in organisms.FindAll(o => !o.IsDead))
             {
                 organism.Move(ClientSize.Width, ClientSize.Height, organisms);
+                organism.Reproduce(organisms, ClientSize.Width, ClientSize.Height);
             }
 
             //organisms.RemoveAll(o => o.IsDead);
@@ -57,12 +60,30 @@ namespace BiologySystem
             foreach (var organism in organisms)
             {
                 organism.Draw(e.Graphics);
-            }
-        }
 
-        private void MainFormLoad(object sender, EventArgs e)
-        {
-            
+                if (isPaused && !organism.IsDead)
+                {
+                    string properties = "";
+
+                    if (organism is Herbivore herbivore)
+                    {
+                        properties = $"Speed: {herbivore.Speed}, Hunger: {herbivore.HungerLevel}, Energy: {herbivore.Energy}";
+                    }
+                    else if (organism is Predator predator)
+                    {
+                        properties = $"Speed: {predator.Speed}, Hunger: {predator.HungerLevel}, Energy: {predator.Energy}";
+                    }
+                    else if (organism is Food food)
+                    {
+                        properties = $"Nutrition: {food.NutritionValue}";
+                    }
+
+
+                    Font font = new Font("Arial", 8);
+                    SizeF textSize = e.Graphics.MeasureString(properties, font);
+                    e.Graphics.DrawString(properties, font, Brushes.Black, organism.X, organism.Y - textSize.Height - 2);
+                }
+            }
         }
 
         private void CreateOrganism(object sender, EventArgs e)
@@ -87,10 +108,29 @@ namespace BiologySystem
                         organisms.Add(new Food(posX, posY, 20, Color.Green, 10));
                         break;
                     default:
-                        
+
                         break;
                 }
             }
+        }
+
+        private void Paused(object sender, EventArgs e)
+        {
+            isPaused = !isPaused;
+
+            if (isPaused)
+            {
+                timer.Stop();
+                foodSpawnTimer.Stop();
+            }
+
+            else
+            {
+                timer.Start();
+                foodSpawnTimer.Start();
+            }
+
+            Invalidate();
         }
     }
 }

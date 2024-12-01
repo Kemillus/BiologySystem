@@ -93,11 +93,6 @@ namespace BiologySystem
             {
                 MoveRandom(formWidth, formHeight);
             }
-
-            if (X < 0) { angle = Math.PI - angle; X = 0; }
-            if (X > formWidth) { angle = Math.PI - angle; X = formWidth; }
-            if (Y < 0) { angle = -angle; Y = 0; }
-            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         public void Eat(Food food)
@@ -107,6 +102,28 @@ namespace BiologySystem
                 Energy += food.NutritionValue;
                 HungerLevel = Math.Max(0, HungerLevel - food.NutritionValue);
                 food.Dead();
+            }
+        }
+
+        public override void Reproduce(List<Organism> organisms, int formWidth, int formHeight)
+        {
+            int reproductionCost = 20;
+
+            if (Energy > reproductionCost)
+            {
+                Energy -= reproductionCost;
+
+                Random rand = new Random();
+                int xOffxet = rand.Next(-10, 11);
+                int yOffset = rand.Next(-10, 11);
+                int newX = X + xOffxet;
+                int newY = Y + yOffset;
+
+                if (newX < 0) newX = 0;
+                if (newX > formWidth) newX = formWidth;
+                if (newY < 0) newY = 0;
+                if (newY > formHeight) newY = formHeight;
+                organisms.Add(new Herbivore(newX, newY, Speed, Color, 0, Energy/2, VisionRadius));
             }
         }
     }

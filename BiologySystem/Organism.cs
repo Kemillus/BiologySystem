@@ -15,10 +15,10 @@ namespace BiologySystem
         public Color Color { get; set; }
         public bool IsDead { get; set; }
         public int HungerIncrease { get; set; }
+
         protected int alpha = 255;
         protected double angle = 0;
         protected Random rand = new Random(Guid.NewGuid().GetHashCode());
-
 
         public Organism(int x, int y, int speed, Color color)
         {
@@ -47,7 +47,7 @@ namespace BiologySystem
 
         protected void MoveRandom(int formWidth, int formHeight)
         {
-            
+
             if (rand.NextDouble() < 0.05)
             {
                 angle = rand.NextDouble() * 2 * Math.PI;
@@ -66,21 +66,18 @@ namespace BiologySystem
             X += (int)dx;
             Y += (int)dy;
 
-            //if (X < 0)
-            //{
-            //    angle = Math.PI - angle;
-            //    X = 0;
-            //}
-
-            //if (X > formWidth)
-            //{
-            //    angle = Math.PI - angle;
-            //    X = formWidth;
-            //}
-
-            //if (Y < 0) { angle = -angle; Y = 0; }
-
-            //if (Y > formHeight) { angle = -angle; Y = formHeight; }
+            if (X < 0)
+            {
+                angle = Math.PI - angle;
+                X = 0;
+            }
+            if (X > formWidth)
+            {
+                angle = Math.PI - angle;
+                X = formWidth;
+            }
+            if (Y < 0) { angle = -angle; Y = 0; }
+            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         public virtual void Draw(Graphics g)

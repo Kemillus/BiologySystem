@@ -77,11 +77,6 @@ namespace BiologySystem
             {
                 MoveRandom(formWidth, formHeight);
             }
-
-            if (X < 0) { angle = Math.PI - angle; X = 0; }
-            if (X > formWidth) { angle = Math.PI - angle; X = formWidth; }
-            if (Y < 0) { angle = -angle; Y = 0; }
-            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         private void MoveTowardsTarget(Organism target)
