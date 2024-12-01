@@ -15,10 +15,11 @@ namespace BiologySystem
         private List<Organism> organisms;
         private Timer timer;
         private Timer foodSpawnTimer;
-
+        private Random rand;
         public MainForm()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             organisms = new List<Organism>();
             timer = new Timer();
             timer.Interval = 100;
@@ -33,7 +34,7 @@ namespace BiologySystem
 
         private void FoodSpawnTimerTick(object sender, EventArgs e)
         {
-            var rand = new Random();
+            rand = new Random(Guid.NewGuid().GetHashCode());
             int x = rand.Next(ClientSize.Width);
             int y = rand.Next(ClientSize.Height);
             organisms.Add(new Food(x, y, 0, Color.Green, 10));

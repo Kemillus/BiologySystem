@@ -28,10 +28,10 @@ namespace BiologySystem
 
             foreach (var organism in organisms)
             {
-                if (organism is Herbivore prey && !prey.IsDead) // Check if prey is alive!
+                if (organism is Herbivore prey && !prey.IsDead)
                 {
                     double distance = DistanceTo(prey);
-                    if (distance <= VisionRadius && distance < minDistance)  // Correct the order of the checks
+                    if (distance <= VisionRadius && distance < minDistance)
                     {
                         minDistance = distance;
                         nearestPrey = prey;
@@ -44,7 +44,7 @@ namespace BiologySystem
 
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
-            Herbivore targetPrey = FindNearestPrey(organisms); // Removed redundant FindAll
+            Herbivore targetPrey = FindNearestPrey(organisms);
 
             if (targetPrey != null)
             {

@@ -15,6 +15,8 @@ namespace BiologySystem
         public Color Color { get; set; }
         public bool IsDead { get; set; }
         protected int alpha = 255;
+        private double angle = 0;
+        private Random rand = new Random();
 
         public Organism(int x, int y, int speed, Color color)
         {
@@ -22,6 +24,7 @@ namespace BiologySystem
             Y = y;
             Speed = speed;
             Color = color;
+            rand = new Random(Guid.NewGuid().GetHashCode());
         }
 
         public virtual void Dead()
@@ -42,29 +45,41 @@ namespace BiologySystem
         protected void MoveRandom(int formWidth, int formHeight)
         {
             var rand = new Random();
-            int absSpeed = Math.Abs(Speed);
-            Y += rand.Next(-absSpeed, absSpeed);
-            X += rand.Next(-absSpeed, absSpeed);
+
+            if (rand.NextDouble() < 0.05)
+            {
+                angle = rand.NextDouble() * 2 * Math.PI;
+
+                int speedVariation = rand.Next(-2, 3);
+                Speed += speedVariation;
+
+
+                if (Speed < 2) Speed = 2;
+                if (Speed > 10) Speed = 10;
+
+            }
+
+            double dx = Math.Cos(angle) * Speed;
+            double dy = Math.Sin(angle) * Speed;
+
+            X += (int)dx;
+            Y += (int)dy;
+
             if (X < 0)
             {
+                angle = Math.PI - angle;
                 X = 0;
-                Speed = -Speed;
             }
+
             if (X > formWidth)
             {
+                angle = Math.PI - angle;
                 X = formWidth;
-                Speed = -Speed;
             }
-            if (Y < 0)
-            {
-                Y = 0;
-                Speed = -Speed;
-            }
-            if (Y > formHeight)
-            {
-                Y = formHeight;
-                Speed = -Speed;
-            }
+
+            if (Y < 0) { angle = -angle; Y = 0; }
+
+            if (Y > formHeight) { angle = -angle; Y = formHeight; }
         }
 
         public virtual void Draw(Graphics g)
