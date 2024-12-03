@@ -47,22 +47,34 @@ namespace BiologySystem
         {
             HungerLevel += HungerIncrease;
 
-            if (HungerLevel >= 500)
+            if (HungerLevel >= 600)
             {
                 Dead();
                 return;
             }
 
-            if (HungerLevel > 400)
+            if (HungerLevel >= 400)
             {
-                Speed = 10;
+                Speed = 11;
+                if (targetPrey == null || !targetPrey.IsDead)
+                {
+                    targetPrey = FindNearestPrey(organisms);
+                }
             }
-            else { Speed = 7; }
-
-            targetPrey = null;
-            if (targetPrey == null || targetPrey.IsDead)
+            else if (HungerLevel >= 200)
             {
-                targetPrey = FindNearestPrey(organisms);
+                Speed = 7;
+
+                if (targetPrey == null || targetPrey.IsDead)
+                {
+                    targetPrey = FindNearestPrey(organisms);
+                }
+            }
+            else
+            {
+                Speed = 5;
+                targetPrey = null;
+                MoveRandom(formWidth, formHeight);
             }
 
             if (targetPrey != null && !targetPrey.IsDead)
@@ -71,10 +83,12 @@ namespace BiologySystem
                 if (DistanceTo(targetPrey) < 5)
                 {
                     Hunt(targetPrey);
+                    targetPrey = null;
                 }
             }
             else
             {
+                targetPrey = null;
                 MoveRandom(formWidth, formHeight);
             }
         }
@@ -97,17 +111,14 @@ namespace BiologySystem
 
         public void Hunt(Herbivore herbivore)
         {
-            if (Math.Abs(X - herbivore.X) < 5 && Math.Abs(Y - herbivore.Y) < 5)
-            {
-                Energy += herbivore.Energy;
-                HungerLevel -= herbivore.Energy;
-                herbivore.Dead();
-            }
+            Energy += herbivore.Energy / 2;
+            HungerLevel -= herbivore.Energy / 2;
+            herbivore.Dead();
         }
 
         public override void Reproduce(List<Organism> organisms, int formWidth, int formHeight)
         {
-            int reproductionCost = 50;
+            int reproductionCost = 100;
 
             if (Energy > reproductionCost)
             {
@@ -122,7 +133,7 @@ namespace BiologySystem
                 if (newX < 0) newX = 0;
                 if (newX > formWidth) newX = formWidth;
                 if (newY < 0) newY = 0;
-                if(newY > formHeight) newY = formHeight;
+                if (newY > formHeight) newY = formHeight;
                 organisms.Add(new Predator(newX, newY, Speed, Color, 0, Energy / 2, VisionRadius));
             }
         }

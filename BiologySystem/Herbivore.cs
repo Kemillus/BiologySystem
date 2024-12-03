@@ -62,47 +62,57 @@ namespace BiologySystem
         {
             HungerLevel += HungerIncrease;
 
-            if (HungerLevel >= 500)
+            if (HungerLevel >= 700)
             {
                 Dead();
                 return;
             }
 
-            if (HungerLevel > 400)
+            if (HungerLevel >= 400)
             {
                 Speed = 10;
+                if (targetFood == null || !targetFood.IsDead)
+                {
+                    targetFood = FindNearestFood(organisms);
+                }
             }
-            else { Speed = 7; }
-
-            targetFood = null;
-            if (targetFood == null)
+            else if (HungerLevel >= 200)
             {
-                targetFood = FindNearestFood(organisms);
+                Speed = 6;
+                if (targetFood == null || !targetFood.IsDead)
+                {
+                    targetFood = FindNearestFood(organisms);
+                }
+            }
+            else
+            {
+                Speed = 4;
+                targetFood = null;
+                MoveRandom(formWidth, formHeight);
             }
 
             if (targetFood != null && !targetFood.IsDead)
             {
                 MoveTowardsTarget(targetFood);
-                if (DistanceTo(targetFood) < 5)
+                if (DistanceTo(targetFood) < 3)
                 {
                     Eat(targetFood);
+                    targetFood = null;
                 }
             }
 
             else
             {
+                targetFood = null;
                 MoveRandom(formWidth, formHeight);
             }
         }
 
         public void Eat(Food food)
         {
-            if (Math.Abs(X - food.X) < 5 && Math.Abs(Y - food.Y) < 5)
-            {
-                Energy += food.NutritionValue;
-                HungerLevel = Math.Max(0, HungerLevel - food.NutritionValue);
-                food.Dead();
-            }
+            Energy += food.NutritionValue;
+            HungerLevel = Math.Max(0, HungerLevel - food.NutritionValue);
+            food.Dead();
         }
 
         public override void Reproduce(List<Organism> organisms, int formWidth, int formHeight)
@@ -123,7 +133,7 @@ namespace BiologySystem
                 if (newX > formWidth) newX = formWidth;
                 if (newY < 0) newY = 0;
                 if (newY > formHeight) newY = formHeight;
-                organisms.Add(new Herbivore(newX, newY, Speed, Color, 0, Energy/2, VisionRadius));
+                organisms.Add(new Herbivore(newX, newY, Speed, Color, 0, Energy / 2, VisionRadius));
             }
         }
     }
