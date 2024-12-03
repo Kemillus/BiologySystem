@@ -15,6 +15,7 @@ namespace BiologySystem
         public Color Color { get; set; }
         public bool IsDead { get; set; }
         public int HungerIncrease { get; set; }
+        public int TimerRec {  get; set; }
 
         protected int alpha = 255;
         protected double angle = 0;
@@ -28,6 +29,7 @@ namespace BiologySystem
             Color = color;
             rand = new Random(Guid.NewGuid().GetHashCode());
             HungerIncrease = 1;
+            TimerRec = 250;
         }
 
         public virtual void Dead()
@@ -84,11 +86,13 @@ namespace BiologySystem
         {
             if (IsDead)
             {
-                alpha -= 5;
-                if (alpha < 0) alpha = 0;
+                TimerRec -= 1; 
+                var color = Color.FromArgb(50, Color);
+                var brush = new SolidBrush(color);
+                g.FillEllipse(brush, X, Y, 10, 10);
             }
 
-            if (alpha > 0)
+            else
             {
                 var color = Color.FromArgb(alpha, Color);
                 var brush = new SolidBrush(color);

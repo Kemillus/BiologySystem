@@ -50,7 +50,7 @@ namespace BiologySystem
                 organism.Reproduce(organisms, ClientSize.Width, ClientSize.Height);
             }
 
-            //organisms.RemoveAll(o => o.IsDead);
+            organisms.RemoveAll(o => o.IsDead && o.TimerRec <= 0);
             Invalidate();
         }
 
