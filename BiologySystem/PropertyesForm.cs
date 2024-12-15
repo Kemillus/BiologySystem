@@ -28,8 +28,10 @@ namespace BiologySystem
             if (!int.TryParse(maskedSpeed.Text, out int speed) ||
                 !int.TryParse(maskedEnergy.Text, out int energy) ||
                 !int.TryParse(maskedHungerLevel.Text, out int hungerLevel) ||
-                !int.TryParse(maskedVisouRadius.Text, out int visouRadius) ||
-                !int.TryParse(maskedNutritionValue.Text, out int nutritionValue))
+                !int.TryParse(maskedVisonRadius.Text, out int visouRadius) ||
+                !int.TryParse(maskedNutritionValue.Text, out int nutritionValue) ||
+                !int.TryParse(maskedMaxHunger.Text, out int maxHuger) ||
+                !int.TryParse(maskedReprodyce.Text, out int energyReprodyce))
             {
                 MessageBox.Show("ERROR, check values");
                 return;
@@ -38,53 +40,60 @@ namespace BiologySystem
             switch (comboBox1.Text)
             {
                 case "Herbivore":
-                    
-                    Herbivore = new Herbivore(0, 0, speed, Color.Blue, hungerLevel, energy, visouRadius);
+
+                    Herbivore = new Herbivore(0, 0, speed, hungerLevel, maxHuger, energy,
+                        energyReprodyce, nutritionValue, visouRadius, Color.Blue);
                     break;
                 case "Predator":
-                    
-                    Predator = new Predator(0, 0, speed, Color.Red, hungerLevel, energy, visouRadius);
+
+                    Predator = new Predator(0, 0, speed, hungerLevel, maxHuger, energy,
+                        energyReprodyce, visouRadius, Color.Red);
                     break;
                 case "Food":
-                    Food = new Food(0, 0, 0, 0, 0, 0, Color.Green, nutritionValue);
+                    Food = new Food(0, 0, 0, 0, 0, 0, 0, 0, Color.Green, nutritionValue);
                     break;
                 default:
                     break;
             }
         }
 
-        private bool CheckValues()
-        {
-            if (!int.TryParse(maskedSpeed.Text, out int speed) ||
-                !int.TryParse(maskedEnergy.Text, out int energy) ||
-                !int.TryParse(maskedHungerLevel.Text, out int hungerLevel) ||
-                !int.TryParse(maskedVisouRadius.Text, out int visouRadius))
-            {
-                MessageBox.Show("ERROR, check values");
-                return false;
-            }
-            return true;
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.Text == "Food")
+            if (comboBox1.Text == OrganismsEnum.Food.ToString())
             {
+                maskedNutritionValue.Enabled = true;
                 maskedEnergy.Enabled = false;
                 maskedEnergy.Text = "0";
                 maskedHungerLevel.Enabled = false;
                 maskedHungerLevel.Text = "0";
                 maskedSpeed.Enabled = false;
                 maskedSpeed.Text = "0";
-                maskedVisouRadius.Enabled = false;
-                maskedVisouRadius.Text = "0";
+                maskedVisonRadius.Enabled = false;
+                maskedVisonRadius.Text = "0";
+                maskedReprodyce.Enabled = false;
+                maskedReprodyce.Text = "0";
+                maskedMaxHunger.Enabled = false;
+                maskedMaxHunger.Text = "0";
             }
+
+            else if (comboBox1.Text == OrganismsEnum.Predator.ToString())
+            {
+                maskedEnergy.Enabled = true;
+                maskedHungerLevel.Enabled = true;
+                maskedSpeed.Enabled = true;
+                maskedNutritionValue.Enabled = false;
+                maskedNutritionValue.Text = "0";
+                maskedSpeed.Enabled = true;
+                maskedVisonRadius.Enabled = true;
+            }
+
             else
             {
                 maskedEnergy.Enabled = true;
                 maskedHungerLevel.Enabled = true;
                 maskedSpeed.Enabled = true;
-                maskedVisouRadius.Enabled = true;
+                maskedVisonRadius.Enabled = true;
+                maskedNutritionValue.Enabled = true;
             }
         }
     }

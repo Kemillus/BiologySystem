@@ -50,7 +50,7 @@ namespace BiologySystem
             rand = new Random(Guid.NewGuid().GetHashCode());
             int x = rand.Next(ClientSize.Width);
             int y = rand.Next(ClientSize.Height);
-            organisms.Add(new Food(x, y, 0, 0, 0, 0, food.Color, food.NutritionValue));
+            organisms.Add(new Food(x, y, 0, 0, 0, 0, 0, 0, food.Color, food.NutritionValue));
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -114,8 +114,8 @@ namespace BiologySystem
                             MessageBox.Show("Predator don't Create");
                             return;
                         }
-                        organisms.Add(new Predator(posX, posY, predator.Speed, predator.Color, predator.HungerLevel,
-                            predator.Energy, predator.VisionRadius));
+                        organisms.Add(new Predator(posX, posY, predator.Speed, predator.HungerLevel, predator.MaxHungerLevel,
+                            predator.Energy, predator.EnergyForReproduction, predator.VisionRadius, predator.Color));
                         break;
                     case "buttonHerbivore":
                         if (herbivore == null)
@@ -123,8 +123,9 @@ namespace BiologySystem
                             MessageBox.Show("Herbivore don't Create");
                             return;
                         }
-                        organisms.Add(new Herbivore(posX, posY, herbivore.Speed,
-                            herbivore.Color, herbivore.HungerLevel, herbivore.Energy, herbivore.VisionRadius));
+                        organisms.Add(new Herbivore(posX, posY, herbivore.Speed, herbivore.HungerLevel, herbivore.MaxHungerLevel,
+                            herbivore.Energy, herbivore.EnergyForReproduction, herbivore.NutritionValue, herbivore.VisionRadius,
+                            herbivore.Color));
                         break;
                     case "buttonFood":
                         if (food == null)
@@ -132,7 +133,7 @@ namespace BiologySystem
                             MessageBox.Show("Food don't Create");
                             return;
                         }
-                        organisms.Add(new Food(posX, posY, 0, 0, 0, 0, food.Color, food.NutritionValue));
+                        organisms.Add(new Food(posX, posY, 0, 0, 0, 0, 0, 0, food.Color, food.NutritionValue));
                         break;
                     default:
 

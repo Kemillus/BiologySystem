@@ -13,21 +13,23 @@ namespace BiologySystem
         public int Y { get; set; }
         public int Speed { get; set; }
         public Color Color { get; set; }
-        public int HungerLevel {  get; set; }
+        public int HungerLevel { get; set; }
         public int Energy { get; set; }
         public int VisionRadius { get; set; }
+        public int MaxHungerLevel { get; set; }
+        public int EnergyForReproduction { get; set; }
 
         public bool IsDead { get; set; }
         public int HungerIncrease { get; set; }
-        public int TimerRec {  get; set; }
+        public int TimerRec { get; set; }
 
         protected int alpha = 255;
         protected double angle = 0;
         protected int startSpeed;
         protected Random rand = new Random(Guid.NewGuid().GetHashCode());
 
-        public Organism(int x, int y, int speed,int hungerLevel, int energy,
-            int visionRadius, Color color)
+        public Organism(int x, int y, int speed, int hungerLevel, int maxHunger,
+            int energy, int energyReprodyce, int visionRadius,  Color color)
         {
             X = x;
             Y = y;
@@ -36,6 +38,8 @@ namespace BiologySystem
             HungerLevel = hungerLevel;
             Energy = energy;
             VisionRadius = visionRadius;
+            MaxHungerLevel = hungerLevel;
+            EnergyForReproduction = energyReprodyce;
             startSpeed = speed;
             rand = new Random(Guid.NewGuid().GetHashCode());
             HungerIncrease = 1;
@@ -96,7 +100,7 @@ namespace BiologySystem
         {
             if (IsDead)
             {
-                TimerRec -= 1; 
+                TimerRec -= 1;
                 var color = Color.FromArgb(50, Color);
                 var brush = new SolidBrush(color);
                 g.FillEllipse(brush, X, Y, 10, 10);

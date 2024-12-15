@@ -31,7 +31,7 @@
             this.buttonCreate = new System.Windows.Forms.Button();
             this.maskedHungerLevel = new System.Windows.Forms.MaskedTextBox();
             this.maskedEnergy = new System.Windows.Forms.MaskedTextBox();
-            this.maskedVisouRadius = new System.Windows.Forms.MaskedTextBox();
+            this.maskedVisonRadius = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,6 +41,10 @@
             this.maskedNutritionValue = new System.Windows.Forms.MaskedTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.maskedMaxHunger = new System.Windows.Forms.MaskedTextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.maskedReprodyce = new System.Windows.Forms.MaskedTextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonCreate
@@ -71,23 +75,23 @@
             this.maskedEnergy.TabIndex = 1;
             this.maskedEnergy.ValidatingType = typeof(int);
             // 
-            // maskedVisouRadius
+            // maskedVisonRadius
             // 
-            this.maskedVisouRadius.Location = new System.Drawing.Point(300, 143);
-            this.maskedVisouRadius.Mask = "00000";
-            this.maskedVisouRadius.Name = "maskedVisouRadius";
-            this.maskedVisouRadius.Size = new System.Drawing.Size(100, 20);
-            this.maskedVisouRadius.TabIndex = 1;
-            this.maskedVisouRadius.ValidatingType = typeof(int);
+            this.maskedVisonRadius.Location = new System.Drawing.Point(300, 143);
+            this.maskedVisonRadius.Mask = "00000";
+            this.maskedVisonRadius.Name = "maskedVisonRadius";
+            this.maskedVisonRadius.Size = new System.Drawing.Size(100, 20);
+            this.maskedVisonRadius.TabIndex = 1;
+            this.maskedVisonRadius.ValidatingType = typeof(int);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 127);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Huger";
+            this.label1.Text = "Hunger";
             // 
             // label2
             // 
@@ -109,7 +113,7 @@
             // 
             // maskedSpeed
             // 
-            this.maskedSpeed.Location = new System.Drawing.Point(158, 195);
+            this.maskedSpeed.Location = new System.Drawing.Point(300, 195);
             this.maskedSpeed.Mask = "00000";
             this.maskedSpeed.Name = "maskedSpeed";
             this.maskedSpeed.Size = new System.Drawing.Size(100, 20);
@@ -119,7 +123,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 179);
+            this.label4.Location = new System.Drawing.Point(297, 179);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 2;
@@ -136,7 +140,7 @@
             // 
             // maskedNutritionValue
             // 
-            this.maskedNutritionValue.Location = new System.Drawing.Point(16, 195);
+            this.maskedNutritionValue.Location = new System.Drawing.Point(300, 247);
             this.maskedNutritionValue.Mask = "00000";
             this.maskedNutritionValue.Name = "maskedNutritionValue";
             this.maskedNutritionValue.Size = new System.Drawing.Size(100, 20);
@@ -146,7 +150,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 179);
+            this.label5.Location = new System.Drawing.Point(297, 231);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 2;
@@ -154,13 +158,49 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(168, 260);
+            this.button1.Location = new System.Drawing.Point(168, 293);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Create";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCreate_Click);
+            // 
+            // maskedMaxHunger
+            // 
+            this.maskedMaxHunger.Location = new System.Drawing.Point(16, 195);
+            this.maskedMaxHunger.Mask = "00000";
+            this.maskedMaxHunger.Name = "maskedMaxHunger";
+            this.maskedMaxHunger.Size = new System.Drawing.Size(100, 20);
+            this.maskedMaxHunger.TabIndex = 1;
+            this.maskedMaxHunger.ValidatingType = typeof(int);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 179);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 13);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Max Hunger";
+            // 
+            // maskedReprodyce
+            // 
+            this.maskedReprodyce.Location = new System.Drawing.Point(158, 195);
+            this.maskedReprodyce.Mask = "00000";
+            this.maskedReprodyce.Name = "maskedReprodyce";
+            this.maskedReprodyce.Size = new System.Drawing.Size(100, 20);
+            this.maskedReprodyce.TabIndex = 1;
+            this.maskedReprodyce.ValidatingType = typeof(int);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(155, 179);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Energy For Reprodyce";
             // 
             // PropertiesForm
             // 
@@ -169,14 +209,18 @@
             this.ClientSize = new System.Drawing.Size(425, 450);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.maskedVisouRadius);
+            this.Controls.Add(this.maskedVisonRadius);
+            this.Controls.Add(this.maskedReprodyce);
             this.Controls.Add(this.maskedEnergy);
             this.Controls.Add(this.maskedSpeed);
             this.Controls.Add(this.maskedNutritionValue);
+            this.Controls.Add(this.maskedMaxHunger);
             this.Controls.Add(this.maskedHungerLevel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCreate);
@@ -192,7 +236,7 @@
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.MaskedTextBox maskedHungerLevel;
         private System.Windows.Forms.MaskedTextBox maskedEnergy;
-        private System.Windows.Forms.MaskedTextBox maskedVisouRadius;
+        private System.Windows.Forms.MaskedTextBox maskedVisonRadius;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -202,5 +246,9 @@
         private System.Windows.Forms.MaskedTextBox maskedNutritionValue;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.MaskedTextBox maskedMaxHunger;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MaskedTextBox maskedReprodyce;
+        private System.Windows.Forms.Label label7;
     }
 }

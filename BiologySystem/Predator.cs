@@ -10,10 +10,10 @@ namespace BiologySystem
     public class Predator : Organism
     {
         private Herbivore targetPrey = null;
-        private int maxHungerLevel;
 
-        public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
-            : base(x, y, speed, hungerLevel, energy, visionRadius, color)
+        public Predator(int x, int y, int speed, int hungerLevel, int maxHunger, int energy,
+            int energyReprodyce, int visionRadius, Color color)
+            : base(x, y, speed, hungerLevel, maxHunger, energy, energyReprodyce, visionRadius, color)
         {
 
         }
@@ -43,13 +43,13 @@ namespace BiologySystem
         {
             HungerLevel += HungerIncrease;
 
-            if (HungerLevel >= 600)
+            if (HungerLevel >= MaxHungerLevel)
             {
                 Dead();
                 return;
             }
 
-            if (HungerLevel >= 400)
+            if (HungerLevel >= MaxHungerLevel/2)
             {
                 Speed = 11;
                 if (targetPrey == null || !targetPrey.IsDead)
@@ -57,7 +57,7 @@ namespace BiologySystem
                     targetPrey = FindNearestPrey(organisms);
                 }
             }
-            else if (HungerLevel >= 200)
+            else if (HungerLevel >= MaxHungerLevel/3)
             {
                 Speed = 7;
 
@@ -107,8 +107,9 @@ namespace BiologySystem
 
         public void Hunt(Herbivore herbivore)
         {
-            Energy += herbivore.Energy;
-            HungerLevel -= herbivore.Energy;
+            Energy += herbivore.NutritionValue;
+            HungerLevel -= herbivore.NutritionValue;
+            Speed = startSpeed;
             herbivore.Dead();
         }
 
@@ -130,7 +131,8 @@ namespace BiologySystem
                 if (newX > formWidth) newX = formWidth;
                 if (newY < 0) newY = 0;
                 if (newY > formHeight) newY = formHeight;
-                organisms.Add(new Predator(newX, newY, Speed, Color, 0, Energy / 2, VisionRadius));
+                organisms.Add(new Predator(newX, newY, Speed, 0, MaxHungerLevel, 0, EnergyForReproduction,
+                    VisionRadius, Color));
             }
         }
     }

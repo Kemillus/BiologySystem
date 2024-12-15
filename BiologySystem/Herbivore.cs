@@ -10,11 +10,13 @@ namespace BiologySystem
     public class Herbivore : Organism
     {
         private Food targetFood = null;
+        public int NutritionValue { get; set; }
 
-        public Herbivore(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
-            : base(x, y, speed, hungerLevel, energy, visionRadius, color)
+        public Herbivore(int x, int y, int speed,
+            int hungerLevel, int maxHunger, int energy, int energyReprodyce, int nutritionValue, int visionRadius, Color color)
+            : base(x, y, speed, hungerLevel, maxHunger, energy, energyReprodyce, visionRadius, color)
         {
-
+            NutritionValue = nutritionValue;
         }
 
         public Food FindNearestFood(List<Organism> organisms)
@@ -129,7 +131,8 @@ namespace BiologySystem
                 if (newX > formWidth) newX = formWidth;
                 if (newY < 0) newY = 0;
                 if (newY > formHeight) newY = formHeight;
-                organisms.Add(new Herbivore(newX, newY, Speed, Color, 0, Energy / 2, VisionRadius));
+                organisms.Add(new Herbivore(newX, newY, Speed, 0, MaxHungerLevel, 0, EnergyForReproduction,
+                    NutritionValue, VisionRadius, Color));
             }
         }
     }
