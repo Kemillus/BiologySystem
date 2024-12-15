@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 
 namespace BiologySystem
 {
-    internal class Herbivore : Organism
+    public class Herbivore : Organism
     {
-        public int HungerLevel { get; set; }
-        public int Energy { get; set; }
-        public int VisionRadius { get; set; }
         private Food targetFood = null;
 
         public Herbivore(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
-            : base(x, y, speed, color)
+            : base(x, y, speed, hungerLevel, energy, visionRadius, color)
         {
-            HungerLevel = hungerLevel;
-            Energy = energy;
-            VisionRadius = visionRadius;
+
         }
 
         public Food FindNearestFood(List<Organism> organisms)
@@ -70,7 +65,7 @@ namespace BiologySystem
 
             if (HungerLevel >= 400)
             {
-                Speed = 10;
+                Speed = startSpeed * 2;
                 if (targetFood == null || !targetFood.IsDead)
                 {
                     targetFood = FindNearestFood(organisms);
@@ -78,7 +73,7 @@ namespace BiologySystem
             }
             else if (HungerLevel >= 200)
             {
-                Speed = 6;
+                Speed = startSpeed + startSpeed / 2;
                 if (targetFood == null || !targetFood.IsDead)
                 {
                     targetFood = FindNearestFood(organisms);
@@ -86,7 +81,7 @@ namespace BiologySystem
             }
             else
             {
-                Speed = 4;
+                Speed = startSpeed;
                 targetFood = null;
                 MoveRandom(formWidth, formHeight);
             }
@@ -112,6 +107,7 @@ namespace BiologySystem
         {
             Energy += food.NutritionValue;
             HungerLevel = Math.Max(0, HungerLevel - food.NutritionValue);
+            Speed = startSpeed;
             food.Dead();
         }
 

@@ -13,20 +13,30 @@ namespace BiologySystem
         public int Y { get; set; }
         public int Speed { get; set; }
         public Color Color { get; set; }
+        public int HungerLevel {  get; set; }
+        public int Energy { get; set; }
+        public int VisionRadius { get; set; }
+
         public bool IsDead { get; set; }
         public int HungerIncrease { get; set; }
         public int TimerRec {  get; set; }
 
         protected int alpha = 255;
         protected double angle = 0;
+        protected int startSpeed;
         protected Random rand = new Random(Guid.NewGuid().GetHashCode());
 
-        public Organism(int x, int y, int speed, Color color)
+        public Organism(int x, int y, int speed,int hungerLevel, int energy,
+            int visionRadius, Color color)
         {
             X = x;
             Y = y;
             Speed = speed;
             Color = color;
+            HungerLevel = hungerLevel;
+            Energy = energy;
+            VisionRadius = visionRadius;
+            startSpeed = speed;
             rand = new Random(Guid.NewGuid().GetHashCode());
             HungerIncrease = 1;
             TimerRec = 250;
@@ -59,7 +69,7 @@ namespace BiologySystem
 
 
                 if (Speed < 1) Speed = 1;
-                if (Speed > 10) Speed = 10;
+                if (Speed > Speed * 2) Speed = startSpeed * 2;
             }
 
             double dx = Math.Cos(angle) * Speed;

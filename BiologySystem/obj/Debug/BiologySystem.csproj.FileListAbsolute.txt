@@ -8,3 +8,4 @@ D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.csproj.GenerateR
 D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.csproj.CoreCompileInputs.cache
 D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.exe
 D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.pdb
+D:\Veronika\BiologySystem\BiologySystem\obj\Debug\BiologySystem.PropertiesForm.resources

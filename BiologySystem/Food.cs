@@ -11,8 +11,9 @@ namespace BiologySystem
     {
         public int NutritionValue { get; set; }
 
-        public Food(int x, int y, int speed, Color color, int nutritionValue)
-            : base(x, y, speed, color)
+        public Food(int x, int y, int speed, int hungerLevel, int energy,
+            int visionRadius, Color color, int nutritionValue)
+            : base(x, y, speed, hungerLevel, energy, visionRadius, color)
         {
             NutritionValue = nutritionValue;
         }

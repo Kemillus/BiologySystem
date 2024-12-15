@@ -13,10 +13,15 @@ namespace BiologySystem
     public partial class MainForm : Form
     {
         private List<Organism> organisms;
+
         private Timer timer;
         private Timer foodSpawnTimer;
         private Random rand;
         private bool isPaused = false;
+
+        private Predator predator;
+        private Herbivore herbivore;
+        private Food food;
 
         public MainForm()
         {
@@ -36,10 +41,16 @@ namespace BiologySystem
 
         private void FoodSpawnTimerTick(object sender, EventArgs e)
         {
+            if (food == null)
+            {
+                labelMessage.Text = "Create Food";
+                return;
+            }
+            labelMessage.Text = "";
             rand = new Random(Guid.NewGuid().GetHashCode());
             int x = rand.Next(ClientSize.Width);
             int y = rand.Next(ClientSize.Height);
-            organisms.Add(new Food(x, y, 0, Color.Green, 10));
+            organisms.Add(new Food(x, y, 0, 0, 0, 0, food.Color, food.NutritionValue));
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -78,7 +89,6 @@ namespace BiologySystem
                         properties = $"Nutrition: {food.NutritionValue}";
                     }
 
-
                     Font font = new Font("Arial", 8);
                     SizeF textSize = e.Graphics.MeasureString(properties, font);
                     e.Graphics.DrawString(properties, font, Brushes.Black, organism.X, organism.Y - textSize.Height - 2);
@@ -99,13 +109,30 @@ namespace BiologySystem
                 switch (clickedButton.Name)
                 {
                     case "buttonPredator":
-                        organisms.Add(new Predator(posX, posY, 9, Color.Red, 50, 100, 100));
+                        if (predator == null)
+                        {
+                            MessageBox.Show("Predator don't Create");
+                            return;
+                        }
+                        organisms.Add(new Predator(posX, posY, predator.Speed, predator.Color, predator.HungerLevel,
+                            predator.Energy, predator.VisionRadius));
                         break;
                     case "buttonHerbivore":
-                        organisms.Add(new Herbivore(posX, posY, 5, Color.Blue, 50, 100, 100));
+                        if (herbivore == null)
+                        {
+                            MessageBox.Show("Herbivore don't Create");
+                            return;
+                        }
+                        organisms.Add(new Herbivore(posX, posY, herbivore.Speed,
+                            herbivore.Color, herbivore.HungerLevel, herbivore.Energy, herbivore.VisionRadius));
                         break;
                     case "buttonFood":
-                        organisms.Add(new Food(posX, posY, 20, Color.Green, 10));
+                        if (food == null)
+                        {
+                            MessageBox.Show("Food don't Create");
+                            return;
+                        }
+                        organisms.Add(new Food(posX, posY, 0, 0, 0, 0, food.Color, food.NutritionValue));
                         break;
                     default:
 
@@ -131,6 +158,28 @@ namespace BiologySystem
             }
 
             Invalidate();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PropertiesForm form = new PropertiesForm();
+            form.ShowDialog();
+
+            if (form.DialogResult == DialogResult.OK)
+            {
+                if (form.Herbivore != null)
+                {
+                    herbivore = form.Herbivore;
+                }
+                if (form.Predator != null)
+                {
+                    predator = form.Predator;
+                }
+                if (form.Food != null)
+                {
+                    food = form.Food;
+                }
+            }
         }
     }
 }

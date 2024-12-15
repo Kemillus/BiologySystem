@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 
 namespace BiologySystem
 {
-    internal class Predator : Organism
+    public class Predator : Organism
     {
-        public int HungerLevel { get; set; }
-        public int Energy { get; set; }
-        public int VisionRadius { get; set; }
         private Herbivore targetPrey = null;
+        private int maxHungerLevel;
 
         public Predator(int x, int y, int speed, Color color, int hungerLevel, int energy, int visionRadius)
-            : base(x, y, speed, color)
+            : base(x, y, speed, hungerLevel, energy, visionRadius, color)
         {
-            HungerLevel = hungerLevel;
-            Energy = energy;
-            VisionRadius = visionRadius;
+
         }
 
         public Herbivore FindNearestPrey(List<Organism> organisms)
@@ -111,8 +107,8 @@ namespace BiologySystem
 
         public void Hunt(Herbivore herbivore)
         {
-            Energy += herbivore.Energy / 2;
-            HungerLevel -= herbivore.Energy / 2;
+            Energy += herbivore.Energy;
+            HungerLevel -= herbivore.Energy;
             herbivore.Dead();
         }
 
