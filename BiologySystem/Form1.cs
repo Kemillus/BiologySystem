@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BiologySystem
@@ -41,11 +36,13 @@ namespace BiologySystem
 
         private void FoodSpawnTimerTick(object sender, EventArgs e)
         {
-            if (food == null)
+            if (organisms.Count == 0)
             {
-                labelMessage.Text = "Create Food";
+                labelMessage.ForeColor = Color.LightSlateGray;
+                labelMessage.Text = "Create organisms";
                 return;
             }
+
             labelMessage.Text = "";
             rand = new Random(Guid.NewGuid().GetHashCode());
             int x = rand.Next(ClientSize.Width);

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BiologySystem
 {
@@ -42,6 +39,7 @@ namespace BiologySystem
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
             HungerLevel += HungerIncrease;
+            LifeTime += 1;
 
             if (HungerLevel >= MaxHungerLevel || LifeTime >= LifeSpan)
             {

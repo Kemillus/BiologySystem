@@ -55,6 +55,7 @@ namespace BiologySystem
         public override void Move(int formWidth, int formHeight, List<Organism> organisms)
         {
             HungerLevel += HungerIncrease;
+            LifeTime += 1;
 
             if (HungerLevel >= MaxHungerLevel || LifeTime >= LifeSpan)
             {

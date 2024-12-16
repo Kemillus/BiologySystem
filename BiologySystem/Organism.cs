@@ -45,7 +45,7 @@ namespace BiologySystem
             rand = new Random(Guid.NewGuid().GetHashCode());
             HungerIncrease = 1;
             TimerRec = 250;
-            formOrganism = FormOrganism.Rect;
+            formOrganism = (FormOrganism)rand.Next(Enum.GetNames(typeof(FormOrganism)).Length);
         }
 
         public virtual void Dead()
@@ -99,21 +99,50 @@ namespace BiologySystem
 
         public virtual void Draw(Graphics g)
         {
-            if (IsDead)
+            int alphaValue = IsDead ? 50 : alpha;
+            Color color = Color.FromArgb(alphaValue, Color);
+            Brush brush = new SolidBrush(color);
+
+            switch (formOrganism)
             {
-                TimerRec -= 1;
-                var color = Color.FromArgb(50, Color);
-                var brush = new SolidBrush(color);
-                g.FillEllipse(brush, X, Y, 10, 10);
+                case FormOrganism.Rectangle:
+                    g.FillRectangle(brush, X, Y, 10, 10);
+                    break;
+                case FormOrganism.Ellipse:
+                    g.FillEllipse(brush, X, Y, 10, 10);
+                    break;
+                case FormOrganism.Triangle:
+                    DrawTriangle(g, brush);
+                    break;
+                case FormOrganism.Diamond:
+                    DrawDiamond(g, brush);
+                    break;
+                default:
+                    break;
             }
 
-            else
-            {
-                LifeTime += 1;
-                var color = Color.FromArgb(alpha, Color);
-                var brush = new SolidBrush(color);
-                g.FillEllipse(brush, X, Y, 10, 10);
-            }
+            if (IsDead) TimerRec -= 1;
+        }
+
+        private void DrawTriangle(Graphics g, Brush brush)
+        {
+            Point[] points = {
+                new Point(X+5, Y),
+                new Point(X, Y+10),
+                new Point(X+10, Y+10)
+            };
+            g.FillPolygon(brush, points);
+        }
+
+        private void DrawDiamond(Graphics g, Brush brush)
+        {
+            Point[] points = {
+                new Point(X+5, Y),
+                new Point(X, Y+5),
+                new Point(X+5, Y+10),
+                new Point(X+10, Y+5)
+            };
+            g.FillPolygon(brush, points);
         }
 
         public virtual void Reproduce(List<Organism> organisms, int formWidth, int formHeight) { }

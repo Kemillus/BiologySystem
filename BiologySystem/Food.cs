@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BiologySystem
 {
@@ -16,6 +12,11 @@ namespace BiologySystem
             : base(x, y, speed, hungerLevel, maxHunger, energy, energyForReproduce, visionRadius, lifeSpan, color)
         {
             NutritionValue = nutritionValue;
+        }
+
+        public override void Move(int formWidth, int formHeight, List<Organism> organisms)
+        {
+            LifeTime += 1;
         }
 
         public override string ToString()

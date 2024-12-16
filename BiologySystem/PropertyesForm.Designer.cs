@@ -55,7 +55,7 @@
             this.buttonCreate.Location = new System.Drawing.Point(168, 415);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(75, 23);
-            this.buttonCreate.TabIndex = 0;
+            this.buttonCreate.TabIndex = 10;
             this.buttonCreate.Text = "OK";
             this.buttonCreate.UseVisualStyleBackColor = true;
             // 
@@ -74,7 +74,7 @@
             this.maskedEnergy.Mask = "00000";
             this.maskedEnergy.Name = "maskedEnergy";
             this.maskedEnergy.Size = new System.Drawing.Size(100, 20);
-            this.maskedEnergy.TabIndex = 1;
+            this.maskedEnergy.TabIndex = 4;
             this.maskedEnergy.ValidatingType = typeof(int);
             // 
             // maskedVisonRadius
@@ -83,7 +83,7 @@
             this.maskedVisonRadius.Mask = "00000";
             this.maskedVisonRadius.Name = "maskedVisonRadius";
             this.maskedVisonRadius.Size = new System.Drawing.Size(100, 20);
-            this.maskedVisonRadius.TabIndex = 1;
+            this.maskedVisonRadius.TabIndex = 6;
             this.maskedVisonRadius.ValidatingType = typeof(int);
             // 
             // label1
@@ -119,7 +119,7 @@
             this.maskedSpeed.Mask = "00000";
             this.maskedSpeed.Name = "maskedSpeed";
             this.maskedSpeed.Size = new System.Drawing.Size(100, 20);
-            this.maskedSpeed.TabIndex = 1;
+            this.maskedSpeed.TabIndex = 7;
             this.maskedSpeed.ValidatingType = typeof(int);
             // 
             // label4
@@ -133,11 +133,11 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.Location = new System.Drawing.Point(147, 12);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 3;
+            this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // maskedNutritionValue
@@ -146,7 +146,7 @@
             this.maskedNutritionValue.Mask = "00000";
             this.maskedNutritionValue.Name = "maskedNutritionValue";
             this.maskedNutritionValue.Size = new System.Drawing.Size(100, 20);
-            this.maskedNutritionValue.TabIndex = 1;
+            this.maskedNutritionValue.TabIndex = 8;
             this.maskedNutritionValue.ValidatingType = typeof(int);
             // 
             // label5
@@ -163,7 +163,7 @@
             this.button1.Location = new System.Drawing.Point(168, 293);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 9;
             this.button1.Text = "Create";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCreate_Click);
@@ -174,7 +174,7 @@
             this.maskedMaxHunger.Mask = "00000";
             this.maskedMaxHunger.Name = "maskedMaxHunger";
             this.maskedMaxHunger.Size = new System.Drawing.Size(100, 20);
-            this.maskedMaxHunger.TabIndex = 1;
+            this.maskedMaxHunger.TabIndex = 2;
             this.maskedMaxHunger.ValidatingType = typeof(int);
             // 
             // label6
@@ -192,7 +192,7 @@
             this.maskedReprodyce.Mask = "00000";
             this.maskedReprodyce.Name = "maskedReprodyce";
             this.maskedReprodyce.Size = new System.Drawing.Size(100, 20);
-            this.maskedReprodyce.TabIndex = 1;
+            this.maskedReprodyce.TabIndex = 5;
             this.maskedReprodyce.ValidatingType = typeof(int);
             // 
             // label7
@@ -207,10 +207,10 @@
             // maskedLifeSpan
             // 
             this.maskedLifeSpan.Location = new System.Drawing.Point(16, 247);
-            this.maskedLifeSpan.Mask = "00000";
+            this.maskedLifeSpan.Mask = "000000";
             this.maskedLifeSpan.Name = "maskedLifeSpan";
             this.maskedLifeSpan.Size = new System.Drawing.Size(100, 20);
-            this.maskedLifeSpan.TabIndex = 1;
+            this.maskedLifeSpan.TabIndex = 3;
             this.maskedLifeSpan.ValidatingType = typeof(int);
             // 
             // label8
@@ -247,7 +247,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonCreate);
             this.Name = "PropertiesForm";
-            this.Text = "PropertyesForm";
+            this.Text = "Propertyes Form";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,7 +264,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.MaskedTextBox maskedSpeed;
         private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.MaskedTextBox maskedNutritionValue;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
@@ -274,5 +273,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.MaskedTextBox maskedLifeSpan;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
