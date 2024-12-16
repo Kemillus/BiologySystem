@@ -12,8 +12,8 @@ namespace BiologySystem
         private Herbivore targetPrey = null;
 
         public Predator(int x, int y, int speed, int hungerLevel, int maxHunger, int energy,
-            int energyReprodyce, int visionRadius, Color color)
-            : base(x, y, speed, hungerLevel, maxHunger, energy, energyReprodyce, visionRadius, color)
+            int energyReprodyce, int visionRadius, int lifeSpan, Color color)
+            : base(x, y, speed, hungerLevel, maxHunger, energy, energyReprodyce, visionRadius, lifeSpan, color)
         {
 
         }
@@ -43,32 +43,34 @@ namespace BiologySystem
         {
             HungerLevel += HungerIncrease;
 
-            if (HungerLevel >= MaxHungerLevel)
+            if (HungerLevel >= MaxHungerLevel || LifeTime >= LifeSpan)
             {
                 Dead();
                 return;
             }
 
-            if (HungerLevel >= MaxHungerLevel/2)
+            if (HungerLevel >= MaxHungerLevel / 2)
             {
-                Speed = 11;
+                Speed = startSpeed * 2;
                 if (targetPrey == null || !targetPrey.IsDead)
                 {
                     targetPrey = FindNearestPrey(organisms);
                 }
             }
-            else if (HungerLevel >= MaxHungerLevel/3)
+
+            else if (HungerLevel >= MaxHungerLevel / 3)
             {
-                Speed = 7;
+                Speed = startSpeed + startSpeed / 2;
 
                 if (targetPrey == null || targetPrey.IsDead)
                 {
                     targetPrey = FindNearestPrey(organisms);
                 }
             }
+
             else
             {
-                Speed = 5;
+                Speed = startSpeed;
                 targetPrey = null;
                 MoveRandom(formWidth, formHeight);
             }
@@ -82,6 +84,7 @@ namespace BiologySystem
                     targetPrey = null;
                 }
             }
+
             else
             {
                 targetPrey = null;
@@ -115,11 +118,9 @@ namespace BiologySystem
 
         public override void Reproduce(List<Organism> organisms, int formWidth, int formHeight)
         {
-            int reproductionCost = 100;
-
-            if (Energy > reproductionCost)
+            if (Energy > EnergyForReproduction)
             {
-                Energy -= reproductionCost;
+                Energy -= EnergyForReproduction;
 
                 Random rand = new Random();
                 int xOffxet = rand.Next(-10, 11);
@@ -132,8 +133,13 @@ namespace BiologySystem
                 if (newY < 0) newY = 0;
                 if (newY > formHeight) newY = formHeight;
                 organisms.Add(new Predator(newX, newY, Speed, 0, MaxHungerLevel, 0, EnergyForReproduction,
-                    VisionRadius, Color));
+                    VisionRadius, LifeSpan, Color));
             }
+        }
+
+        public override string ToString()
+        {
+            return $"S{Speed}, H{HungerLevel}, E{Energy}, LT{LifeTime}";
         }
     }
 }

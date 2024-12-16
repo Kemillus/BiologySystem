@@ -30,8 +30,9 @@ namespace BiologySystem
                 !int.TryParse(maskedHungerLevel.Text, out int hungerLevel) ||
                 !int.TryParse(maskedVisonRadius.Text, out int visouRadius) ||
                 !int.TryParse(maskedNutritionValue.Text, out int nutritionValue) ||
-                !int.TryParse(maskedMaxHunger.Text, out int maxHuger) ||
-                !int.TryParse(maskedReprodyce.Text, out int energyReprodyce))
+                !int.TryParse(maskedMaxHunger.Text, out int maxHunger) ||
+                !int.TryParse(maskedReprodyce.Text, out int energyReprodyce) ||
+                !int.TryParse(maskedLifeSpan.Text, out int lifeSpan))
             {
                 MessageBox.Show("ERROR, check values");
                 return;
@@ -41,16 +42,16 @@ namespace BiologySystem
             {
                 case "Herbivore":
 
-                    Herbivore = new Herbivore(0, 0, speed, hungerLevel, maxHuger, energy,
-                        energyReprodyce, nutritionValue, visouRadius, Color.Blue);
+                    Herbivore = new Herbivore(0, 0, speed, hungerLevel, maxHunger, energy,
+                        energyReprodyce, nutritionValue, visouRadius, lifeSpan, Color.Blue);
                     break;
                 case "Predator":
 
-                    Predator = new Predator(0, 0, speed, hungerLevel, maxHuger, energy,
-                        energyReprodyce, visouRadius, Color.Red);
+                    Predator = new Predator(0, 0, speed, hungerLevel, maxHunger, energy,
+                        energyReprodyce, visouRadius, lifeSpan, Color.Red);
                     break;
                 case "Food":
-                    Food = new Food(0, 0, 0, 0, 0, 0, 0, 0, Color.Green, nutritionValue);
+                    Food = new Food(0, 0, 0, 0, 0, 0, 0, 0, Color.Green, lifeSpan, nutritionValue);
                     break;
                 default:
                     break;
@@ -91,9 +92,12 @@ namespace BiologySystem
             {
                 maskedEnergy.Enabled = true;
                 maskedHungerLevel.Enabled = true;
+                maskedMaxHunger.Enabled = true;
                 maskedSpeed.Enabled = true;
                 maskedVisonRadius.Enabled = true;
                 maskedNutritionValue.Enabled = true;
+                maskedReprodyce.Enabled = true;
+                maskedLifeSpan.Enabled = true;
             }
         }
     }

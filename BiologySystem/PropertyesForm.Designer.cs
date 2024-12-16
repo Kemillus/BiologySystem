@@ -45,6 +45,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.maskedReprodyce = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.maskedLifeSpan = new System.Windows.Forms.MaskedTextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonCreate
@@ -202,6 +204,24 @@
             this.label7.TabIndex = 2;
             this.label7.Text = "Energy For Reprodyce";
             // 
+            // maskedLifeSpan
+            // 
+            this.maskedLifeSpan.Location = new System.Drawing.Point(16, 247);
+            this.maskedLifeSpan.Mask = "00000";
+            this.maskedLifeSpan.Name = "maskedLifeSpan";
+            this.maskedLifeSpan.Size = new System.Drawing.Size(100, 20);
+            this.maskedLifeSpan.TabIndex = 1;
+            this.maskedLifeSpan.ValidatingType = typeof(int);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 231);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Life Span";
+            // 
             // PropertiesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +233,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.maskedVisonRadius);
@@ -220,6 +241,7 @@
             this.Controls.Add(this.maskedEnergy);
             this.Controls.Add(this.maskedSpeed);
             this.Controls.Add(this.maskedNutritionValue);
+            this.Controls.Add(this.maskedLifeSpan);
             this.Controls.Add(this.maskedMaxHunger);
             this.Controls.Add(this.maskedHungerLevel);
             this.Controls.Add(this.button1);
@@ -250,5 +272,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.MaskedTextBox maskedReprodyce;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.MaskedTextBox maskedLifeSpan;
+        private System.Windows.Forms.Label label8;
     }
 }

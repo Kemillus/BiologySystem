@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BiologySystem
 {
@@ -18,18 +15,20 @@ namespace BiologySystem
         public int VisionRadius { get; set; }
         public int MaxHungerLevel { get; set; }
         public int EnergyForReproduction { get; set; }
-
         public bool IsDead { get; set; }
         public int HungerIncrease { get; set; }
         public int TimerRec { get; set; }
+        public int LifeSpan { get; set; }
+        public int LifeTime { get; set; }
 
         protected int alpha = 255;
         protected double angle = 0;
         protected int startSpeed;
+        protected Enum formOrganism;
         protected Random rand = new Random(Guid.NewGuid().GetHashCode());
 
         public Organism(int x, int y, int speed, int hungerLevel, int maxHunger,
-            int energy, int energyReprodyce, int visionRadius,  Color color)
+            int energy, int energyReprodyce, int visionRadius, int lifeSpan, Color color)
         {
             X = x;
             Y = y;
@@ -38,12 +37,15 @@ namespace BiologySystem
             HungerLevel = hungerLevel;
             Energy = energy;
             VisionRadius = visionRadius;
-            MaxHungerLevel = hungerLevel;
+            MaxHungerLevel = maxHunger;
             EnergyForReproduction = energyReprodyce;
+            LifeSpan = lifeSpan;
             startSpeed = speed;
+            LifeTime = 0;
             rand = new Random(Guid.NewGuid().GetHashCode());
             HungerIncrease = 1;
             TimerRec = 250;
+            formOrganism = FormOrganism.Rect;
         }
 
         public virtual void Dead()
@@ -63,7 +65,6 @@ namespace BiologySystem
 
         protected void MoveRandom(int formWidth, int formHeight)
         {
-
             if (rand.NextDouble() < 0.05)
             {
                 angle = rand.NextDouble() * 2 * Math.PI;
@@ -108,6 +109,7 @@ namespace BiologySystem
 
             else
             {
+                LifeTime += 1;
                 var color = Color.FromArgb(alpha, Color);
                 var brush = new SolidBrush(color);
                 g.FillEllipse(brush, X, Y, 10, 10);

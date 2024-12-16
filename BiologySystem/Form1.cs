@@ -50,7 +50,7 @@ namespace BiologySystem
             rand = new Random(Guid.NewGuid().GetHashCode());
             int x = rand.Next(ClientSize.Width);
             int y = rand.Next(ClientSize.Height);
-            organisms.Add(new Food(x, y, 0, 0, 0, 0, 0, 0, food.Color, food.NutritionValue));
+            organisms.Add(new Food(x, y, 0, 0, 0, 0, 0, 0, food.Color, food.LifeSpan, food.NutritionValue));
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -76,19 +76,7 @@ namespace BiologySystem
                 {
                     string properties = "";
 
-                    if (organism is Herbivore herbivore)
-                    {
-                        properties = $"Speed: {herbivore.Speed}, Hunger: {herbivore.HungerLevel}, Energy: {herbivore.Energy}";
-                    }
-                    else if (organism is Predator predator)
-                    {
-                        properties = $"Speed: {predator.Speed}, Hunger: {predator.HungerLevel}, Energy: {predator.Energy}";
-                    }
-                    else if (organism is Food food)
-                    {
-                        properties = $"Nutrition: {food.NutritionValue}";
-                    }
-
+                    properties = organism.ToString();
                     Font font = new Font("Arial", 8);
                     SizeF textSize = e.Graphics.MeasureString(properties, font);
                     e.Graphics.DrawString(properties, font, Brushes.Black, organism.X, organism.Y - textSize.Height - 2);
@@ -115,7 +103,7 @@ namespace BiologySystem
                             return;
                         }
                         organisms.Add(new Predator(posX, posY, predator.Speed, predator.HungerLevel, predator.MaxHungerLevel,
-                            predator.Energy, predator.EnergyForReproduction, predator.VisionRadius, predator.Color));
+                            predator.Energy, predator.EnergyForReproduction, predator.VisionRadius, predator.LifeSpan, predator.Color));
                         break;
                     case "buttonHerbivore":
                         if (herbivore == null)
@@ -125,7 +113,7 @@ namespace BiologySystem
                         }
                         organisms.Add(new Herbivore(posX, posY, herbivore.Speed, herbivore.HungerLevel, herbivore.MaxHungerLevel,
                             herbivore.Energy, herbivore.EnergyForReproduction, herbivore.NutritionValue, herbivore.VisionRadius,
-                            herbivore.Color));
+                            herbivore.LifeSpan, herbivore.Color));
                         break;
                     case "buttonFood":
                         if (food == null)
@@ -133,7 +121,7 @@ namespace BiologySystem
                             MessageBox.Show("Food don't Create");
                             return;
                         }
-                        organisms.Add(new Food(posX, posY, 0, 0, 0, 0, 0, 0, food.Color, food.NutritionValue));
+                        organisms.Add(new Food(posX, posY, 0, 0, 0, 0, 0, 0, food.Color,food.LifeSpan, food.NutritionValue));
                         break;
                     default:
 

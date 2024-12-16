@@ -12,10 +12,15 @@ namespace BiologySystem
         public int NutritionValue { get; set; }
 
         public Food(int x, int y, int speed, int hungerLevel, int maxHunger, int energy, int energyForReproduce,
-            int visionRadius, Color color, int nutritionValue)
-            : base(x, y, speed, hungerLevel, maxHunger, energy, energyForReproduce, visionRadius, color)
+            int visionRadius, Color color, int lifeSpan, int nutritionValue)
+            : base(x, y, speed, hungerLevel, maxHunger, energy, energyForReproduce, visionRadius, lifeSpan, color)
         {
             NutritionValue = nutritionValue;
+        }
+
+        public override string ToString()
+        {
+            return $"NV {NutritionValue}, LT{LifeTime}";
         }
     }
 }
